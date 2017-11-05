@@ -1,6 +1,6 @@
 package me.yeojoy.apimanager.network.api;
 
-import io.reactivex.Observable;
+import io.reactivex.Flowable;
 import me.yeojoy.apimanager.network.model.response.ListsResponse;
 import retrofit2.http.GET;
 
@@ -10,5 +10,5 @@ import retrofit2.http.GET;
 
 public interface LocalApi {
     @GET("/dojo/list3")
-    Observable<ListsResponse> lists();
+    Flowable<ListsResponse> lists();
 }
