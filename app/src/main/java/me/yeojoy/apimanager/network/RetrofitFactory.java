@@ -25,8 +25,8 @@ public class RetrofitFactory {
         }
 
         return new Retrofit.Builder()
-//                .baseUrl("http://192.168.1.30:8080")
-                .baseUrl("https://www.instagram.com")
+//                .baseUrl("http://192.168.1.30:8080") // 로컬 API
+                .baseUrl("https://api.github.com")
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(httpClient.build())

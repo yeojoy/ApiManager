@@ -1,30 +1,26 @@
 package me.yeojoy.apimanager;
 
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import java.net.ConnectException;
-import java.util.Arrays;
 import java.util.Locale;
-import java.util.stream.Collectors;
 
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import me.yeojoy.apimanager.network.ApiManager;
 import me.yeojoy.apimanager.network.RetrofitFactory;
-import me.yeojoy.apimanager.network.api.InstagramApi;
-import me.yeojoy.apimanager.network.api.LocalApi;
+import me.yeojoy.apimanager.network.api.GithubApi;
+import me.yeojoy.apimanager.network.model.Repository;
 import me.yeojoy.apimanager.network.model.response.BaseResponse;
-import me.yeojoy.apimanager.network.model.response.ListsResponse;
+import me.yeojoy.apimanager.network.model.response.GithubRepositoryResponse;
 
 public class MainActivity extends AppCompatActivity implements ApiManager.RxNetworkBinder {
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -36,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements ApiManager.RxNetw
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_with_constraint_layout);
         mCompositeDisposable = new CompositeDisposable();
 
         textViewResult = (TextView) findViewById(R.id.text_view);
@@ -91,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements ApiManager.RxNetw
 
     private void onClickRequestButton(View view) {
         new ApiManager.Builder(this)
-                .setRequest(RetrofitFactory.createDefaultRetrofit().create(InstagramApi.class).lists(""))
+                .setRequest(RetrofitFactory.createDefaultRetrofit().create(GithubApi.class).repositories("yeojoy"))
                 .setOnResponse(this::onGetResponse)
                 .setOnError(this::onError)
                 .execute();
@@ -112,14 +108,11 @@ public class MainActivity extends AppCompatActivity implements ApiManager.RxNetw
         Log.d(TAG, "response : " + response);
         TextView textView = (TextView) findViewById(R.id.text_view);
         if (response != null) {
-            ListsResponse listsResponse = ListsResponse.class.cast(response);
+            GithubRepositoryResponse githubResponse = GithubRepositoryResponse.class.cast(response);
 
-            textView.setText("message : " + listsResponse.message);
-            textView.append("\n-----------------------------------------------------------\n");
-
-            for (String s : listsResponse.lists) {
+            for (Repository r : githubResponse.repositories) {
                 textView.append("\n");
-                textView.append(s);
+                textView.append(r.name + " " + r.defaultBranch + " : " + r.url);
                 textView.append("\n");
             }
         }
