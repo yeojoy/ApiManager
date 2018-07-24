@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements ApiManager.RxNetw
 
     private void onError(Throwable throwable) {
         if (throwable != null) {
-            TextView textView = (TextView) findViewById(R.id.text_view);
+            TextView textView = findViewById(R.id.text_view);
             if (throwable instanceof ConnectException) {
                 textView.setText("서버에 연결할 수가 없습니다.\n\n");
                 textView.append(throwable.getMessage());
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements ApiManager.RxNetw
 
     private void onGetResponse(BaseResponse response) {
         Log.d(TAG, "response : " + response);
-        TextView textView = (TextView) findViewById(R.id.text_view);
+        TextView textView = findViewById(R.id.text_view);
         if (response != null) {
             ListsResponse listsResponse = ListsResponse.class.cast(response);
 
