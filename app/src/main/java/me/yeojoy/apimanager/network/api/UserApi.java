@@ -1,6 +1,6 @@
 package me.yeojoy.apimanager.network.api;
 
-import io.reactivex.Observable;
+import io.reactivex.Flowable;
 import me.yeojoy.apimanager.network.model.request.UserRegisterRequest;
 import me.yeojoy.apimanager.network.model.response.AuthResponse;
 import me.yeojoy.apimanager.network.model.response.BaseResponse;
@@ -18,15 +18,15 @@ import retrofit2.http.Path;
 public interface UserApi {
 
     @POST("/register")
-    Observable<BaseResponse> register(@Body UserRegisterRequest request);
+    Flowable<BaseResponse> register(@Body UserRegisterRequest request);
 
     @POST("/login")
-    Observable<AuthResponse> login(@Body UserRegisterRequest request);
+    Flowable<AuthResponse> login(@Body UserRegisterRequest request);
 
     @GET("/user/{userId}")
-    Observable<UserResponse> getUser(@Path("userId") int id);
+    Flowable<UserResponse> getUser(@Path("userId") int id);
 
     @DELETE("/user/{userId}")
-    Observable<BaseResponse> deleteUser(@Path("userId") int id);
+    Flowable<BaseResponse> deleteUser(@Path("userId") int id);
 
 }

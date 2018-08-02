@@ -2,6 +2,7 @@ package me.yeojoy.apimanager.network;
 
 import android.content.Context;
 
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -18,7 +19,7 @@ public class ApiManager {
 
     private RxNetworkBinder mBinder;
 
-    private Observable<? extends BaseResponse> mRequest;
+    private Flowable<? extends BaseResponse> mRequest;
     private RxError.OnError mOnError;
     private RxResponse.OnResponse mOnResponse;
 
@@ -41,7 +42,7 @@ public class ApiManager {
             mApiManager = new ApiManager(binder);
         }
 
-        public Builder setRequest(Observable<? extends BaseResponse> request) {
+        public Builder setRequest(Flowable<? extends BaseResponse> request) {
             mApiManager.setRequest(request);
             return this;
         }
@@ -69,7 +70,7 @@ public class ApiManager {
         mOnError = onError;
     }
 
-    private void setRequest(Observable<? extends BaseResponse> request) {
+    private void setRequest(Flowable<? extends BaseResponse> request) {
         mRequest = request;
     }
 

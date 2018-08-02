@@ -1,8 +1,7 @@
 package me.yeojoy.apimanager.network.api;
 
-import io.reactivex.Observable;
+import io.reactivex.Flowable;
 import me.yeojoy.apimanager.network.model.request.ItemRegisterRequest;
-import me.yeojoy.apimanager.network.model.request.UserRegisterRequest;
 import me.yeojoy.apimanager.network.model.response.AllItemsResponse;
 import me.yeojoy.apimanager.network.model.response.BaseResponse;
 import me.yeojoy.apimanager.network.model.response.ItemResponse;
@@ -21,24 +20,24 @@ import retrofit2.http.Path;
 public interface ItemApi {
 
     @POST("/item/{item_name}")
-    Observable<BaseResponse> create(@Header("Authorization") String accessToken,
+    Flowable<BaseResponse> create(@Header("Authorization") String accessToken,
                                     @Path("item_name") String itemName,
                                     @Body ItemRegisterRequest request);
 
     @GET("/item/{item_name}")
-    Observable<ItemResponse> get(@Header("Authorization") String accessToken,
+    Flowable<ItemResponse> get(@Header("Authorization") String accessToken,
                                  @Path("item_name") String itemName);
 
     @DELETE("/item/{item_name}")
-    Observable<BaseResponse> deleteUser(@Header("Authorization") String accessToken,
+    Flowable<BaseResponse> deleteUser(@Header("Authorization") String accessToken,
                                         @Path("item_name") String itemName);
 
     @PUT("/item/{item_name}")
-    Observable<ItemResponse> update(@Header("Authorization") String accessToken,
+    Flowable<ItemResponse> update(@Header("Authorization") String accessToken,
                                     @Path("item_name") String itemName,
                                     @Body ItemRegisterRequest request);
 
     @GET("/items")
-    Observable<AllItemsResponse> getAllItems(@Header("Authorization") String accessToken);
+    Flowable<AllItemsResponse> getAllItems(@Header("Authorization") String accessToken);
 
 }

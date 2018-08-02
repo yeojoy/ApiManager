@@ -16,19 +16,23 @@ import me.yeojoy.apimanager.network.ApiManager;
 import me.yeojoy.apimanager.network.RetrofitFactory;
 import me.yeojoy.apimanager.network.api.StoreApi;
 import me.yeojoy.apimanager.network.api.UserApi;
+import me.yeojoy.apimanager.network.model.Repository;
 import me.yeojoy.apimanager.network.model.request.UserRegisterRequest;
 import me.yeojoy.apimanager.network.model.response.AuthResponse;
 import me.yeojoy.apimanager.network.model.response.BaseResponse;
+import me.yeojoy.apimanager.network.model.response.GithubRepositoryResponse;
 
 public class MainActivity extends AppCompatActivity implements ApiManager.RxNetworkBinder {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private CompositeDisposable mCompositeDisposable;
 
+    private TextView textViewResult;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_with_constraint_layout);
         mCompositeDisposable = new CompositeDisposable();
 
         String name = "yeojoy";
@@ -46,6 +50,57 @@ public class MainActivity extends AppCompatActivity implements ApiManager.RxNetw
 
         UserRegisterRequest request = new UserRegisterRequest(name, password);
 
+//        textViewResult = (TextView) findViewById(R.id.text_view);
+//
+//        findViewById(R.id.button_request).setOnClickListener(this::onClickRequestButton);
+//        findViewById(R.id.button_flowable).setOnClickListener(this::onClickFlowableButton);
+//        findViewById(R.id.button_observable).setOnClickListener(this::onClickObservableButton);
+//    }
+//
+//    private void onClickObservableButton(View view) {
+//        Observable foo = Observable.range(0, 1_000_000_000);
+//        foo.subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(x -> {
+////                    Thread.sleep(1000);
+//                    System.out.println("[very busy receiver] i'm busy. very busy.");
+//                    System.out.println(String.format(Locale.getDefault(), "receiving id: %1$s %2$50.50s", Thread.currentThread().getName(), x));
+//                    textViewResult.append(String.format(Locale.getDefault(), "receiving id: %1$s %2$50.50s", Thread.currentThread().getName(), x));
+//                    textViewResult.append("\n");
+//                }, throwable -> {
+//                    Log.e(TAG, throwable.toString());
+//                    textViewResult.append(throwable.toString());
+//                    textViewResult.append("\n");
+//                }, () -> {
+//                    Log.d(TAG, "Observable complete.");
+//                    textViewResult.append("Observable complete.");
+//                    textViewResult.append("\n");
+//                });
+//    }
+//
+//    private void onClickFlowableButton(View view) {
+//        Flowable foo = Flowable.range(0, 1_000_000_000);
+//
+//        foo.subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(x -> {
+////                    Thread.sleep(1000);
+//                    System.out.println("[very busy receiver] i'm busy. very busy.");
+//                    System.out.println(String.format(Locale.getDefault(), "receiving id: %1$s %2$50.50s", Thread.currentThread().getName(), x));
+//                    textViewResult.append(String.format("receiving id: %s %50.50s", Thread.currentThread().getName(), x));
+//                    textViewResult.append("\n");
+//                }, throwable -> {
+//                    Log.e(TAG, throwable.toString());
+//                    textViewResult.append(throwable.toString());
+//                    textViewResult.append("\n");
+//                }, () -> {
+//                    Log.d(TAG, "Flowable complete.");
+//                    textViewResult.append("Flowable complete.");
+//                    textViewResult.append("\n");
+//                });
+//    }
+//
+//    private void onClickRequestButton(View view) {
         new ApiManager.Builder(this)
                 .setRequest(RetrofitFactory.createDefaultRetrofit().create(UserApi.class)
                         .login(request))
@@ -93,6 +148,13 @@ public class MainActivity extends AppCompatActivity implements ApiManager.RxNetw
         if (response != null) {
             textView.setText("message : " + response.message);
             textView.append("\n-----------------------------------------------------------\n");
+//            GithubRepositoryResponse githubResponse = GithubRepositoryResponse.class.cast(response);
+//
+//            for (Repository r : githubResponse.repositories) {
+//                textView.append("\n");
+//                textView.append(r.name + " " + r.defaultBranch + " : " + r.url);
+//                textView.append("\n");
+//            }
         }
     }
 
