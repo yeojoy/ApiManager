@@ -1,6 +1,7 @@
 package me.yeojoy.apimanager.network;
 
 import me.yeojoy.apimanager.BuildConfig;
+import me.yeojoy.apimanager.Constants;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -11,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by yeojoy on 2017. 10. 16..
  */
 
-public class RetrofitFactory {
+public class RetrofitFactory implements Constants {
 
     public static Retrofit createDefaultRetrofit() {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
@@ -25,10 +26,11 @@ public class RetrofitFactory {
         }
 
         return new Retrofit.Builder()
-                .baseUrl("http://192.168.1.30:8080")
+                .baseUrl(PRODUCT_HOST)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(httpClient.build())
                 .build();
     }
+
 }

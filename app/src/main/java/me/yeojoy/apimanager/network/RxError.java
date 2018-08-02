@@ -1,6 +1,14 @@
 package me.yeojoy.apimanager.network;
 
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+
+import java.io.IOException;
+
 import io.reactivex.functions.Consumer;
+import me.yeojoy.apimanager.network.model.response.BaseResponse;
+import okhttp3.ResponseBody;
+import retrofit2.HttpException;
 
 /**
  * Created by yeojoy on 2017. 10. 16..
@@ -17,14 +25,19 @@ public class RxError implements Consumer<Throwable> {
     }
 
     @Override
-    public void accept(Throwable throwable) {
+    public void accept(Throwable throwable) throws IOException {
         if (mOnError != null) {
-            mOnError.OnError(throwable);
+            ResponseBody body = ((HttpException) throwable).response().errorBody();
+
+            Gson gson = new Gson();
+            TypeAdapter<BaseResponse> adapter = gson.getAdapter
+                    (BaseResponse.class);
+            mOnError.OnError(adapter.fromJson(body.string()), throwable);
         }
     }
 
     public interface OnError {
 
-        void OnError(Throwable throwable);
+        void OnError(BaseResponse response, Throwable throwable);
     }
 }
