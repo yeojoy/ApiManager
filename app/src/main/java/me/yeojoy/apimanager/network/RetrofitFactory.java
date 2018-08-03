@@ -1,7 +1,7 @@
 package me.yeojoy.apimanager.network;
 
 import me.yeojoy.apimanager.BuildConfig;
-import me.yeojoy.apimanager.Constants;
+import me.yeojoy.apimanager.app.Constants;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;

@@ -9,13 +9,12 @@ import android.util.Log;
 import android.widget.TextView;
 
 import io.reactivex.disposables.CompositeDisposable;
+import me.yeojoy.apimanager.app.ApiApplication;
 import me.yeojoy.apimanager.network.ApiManager;
 import me.yeojoy.apimanager.network.RetrofitFactory;
 import me.yeojoy.apimanager.network.api.StoreApi;
-import me.yeojoy.apimanager.network.api.UserApi;
 import me.yeojoy.apimanager.network.model.Store;
 import me.yeojoy.apimanager.network.model.response.AllStoresResponse;
-import me.yeojoy.apimanager.network.model.response.AuthResponse;
 import me.yeojoy.apimanager.network.model.response.BaseResponse;
 
 public class MainActivity extends AppCompatActivity implements ApiManager.RxNetworkBinder {

@@ -2,4 +2,7 @@
     <string name="app_name">ApiManager</string>
     <string name="hint_login_username">username</string>
     <string name="hint_login_password">password</string>
+    <string name="hint_register_username">usernamer</string>
+    <string name="hint_register_password">password</string>
+    <string name="hint_register_confirm_password">confirm password</string>
 </resources>

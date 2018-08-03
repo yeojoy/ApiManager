@@ -27,7 +27,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Login"
-        app:layout_constraintBottom_toTopOf="@id/button_request"
+        app:layout_constraintBottom_toTopOf="@+id/button_request"
         app:layout_constraintLeft_toRightOf="@id/guide_line_center"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

@@ -12,20 +12,22 @@ import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 
 import io.reactivex.disposables.CompositeDisposable;
+import me.yeojoy.apimanager.app.ApiApplication;
+import me.yeojoy.apimanager.app.BaseActivity;
 import me.yeojoy.apimanager.network.ApiManager;
 import me.yeojoy.apimanager.network.RetrofitFactory;
 import me.yeojoy.apimanager.network.api.UserApi;
 import me.yeojoy.apimanager.network.model.request.UserRegisterRequest;
 import me.yeojoy.apimanager.network.model.response.AuthResponse;
 import me.yeojoy.apimanager.network.model.response.BaseResponse;
+import me.yeojoy.apimanager.utils.SoftKeyboardUtil;
 import me.yeojoy.apimanager.utils.UserUtil;
 
-public class LoginActivity extends AppCompatActivity implements ApiManager.RxNetworkBinder {
+public class LoginActivity extends BaseActivity implements ApiManager.RxNetworkBinder {
     private static final String TAG = LoginActivity.class.getSimpleName();
 
     private CompositeDisposable mCompositeDisposable;
     private EditText editTextUsername, editTextPassword;
-    private TextView textViewResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,21 +39,24 @@ public class LoginActivity extends AppCompatActivity implements ApiManager.RxNet
         editTextPassword = findViewById(R.id.edit_text_password);
         textViewResult = findViewById(R.id.text_view);
 
-        findViewById(R.id.button_request_login).setOnClickListener(view -> requestLogin());
+        findViewById(R.id.button_request_login).setOnClickListener(view -> {
+            requestLogin();
+            SoftKeyboardUtil.hideKeyboard(this);
+        });
     }
 
     private void requestLogin() {
 
         String username = editTextUsername.getText().toString();
         if (TextUtils.isEmpty(username)) {
-            logText("No Username!!!");
+            logResult("No Username!!!");
 
             return;
         }
 
         String password = editTextPassword.getText().toString();
         if (TextUtils.isEmpty(username)) {
-            logText("No password!!!");
+            logResult("No password!!!");
             return;
         }
 
@@ -59,11 +64,11 @@ public class LoginActivity extends AppCompatActivity implements ApiManager.RxNet
             password = UserUtil.computeHash(password);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
-            logText(e.getMessage());
+            logResult(e.getMessage());
             return;
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
-            logText(e.getMessage());
+            logResult(e.getMessage());
             return;
         }
 
@@ -80,10 +85,10 @@ public class LoginActivity extends AppCompatActivity implements ApiManager.RxNet
         if (throwable != null) {
 
             if (response != null && !TextUtils.isEmpty(response.message)) {
-                textViewResult.append("\n");
-                textViewResult.append(String.valueOf(statusCode));
-                textViewResult.append(" >>> ");
-                textViewResult.append(response.message);
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.append("\n").append(statusCode);
+                stringBuilder.append(" >>> ").append(response.message);
+                logResult(stringBuilder.toString());
             }
         }
         Log.e(TAG, "error message : " + throwable.getMessage());
@@ -93,8 +98,10 @@ public class LoginActivity extends AppCompatActivity implements ApiManager.RxNet
         Log.d(TAG, "response : " + response);
         AuthResponse authResponse = AuthResponse.class.cast(response);
         if (!TextUtils.isEmpty(authResponse.accessToken) && !TextUtils.isEmpty(authResponse.refreshToken)) {
-            logText("login success!!");
+            logResult("login success!!");
             ApiApplication.accessToken = authResponse.accessToken;
+
+            textViewResult.postDelayed(() -> finish(), 1000);
         }
     }
 
@@ -113,10 +120,6 @@ public class LoginActivity extends AppCompatActivity implements ApiManager.RxNet
     @Override
     public Context getContext() {
         return this;
-    }
-
-    private void logText(String message) {
-        textViewResult.setText(message);
     }
 
 }

@@ -1,4 +1,4 @@
-package me.yeojoy.apimanager;
+package me.yeojoy.apimanager.app;
 
 import android.app.Application;
 
