@@ -25,19 +25,14 @@ public class RxError implements Consumer<Throwable> {
     }
 
     @Override
-    public void accept(Throwable throwable) throws IOException {
+    public void accept(Throwable throwable) {
         if (mOnError != null) {
-            ResponseBody body = ((HttpException) throwable).response().errorBody();
-
-            Gson gson = new Gson();
-            TypeAdapter<BaseResponse> adapter = gson.getAdapter
-                    (BaseResponse.class);
-            mOnError.OnError(adapter.fromJson(body.string()), throwable);
+            mOnError.OnError(throwable);
         }
     }
 
     public interface OnError {
 
-        void OnError(BaseResponse response, Throwable throwable);
+        void OnError(Throwable throwable);
     }
 }
