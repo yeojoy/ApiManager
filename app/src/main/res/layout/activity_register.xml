@@ -8,10 +8,10 @@
     tools:context="me.yeojoy.apimanager.MainActivity">
 
     <Button
-        android:id="@+id/button_observable"
+        android:id="@+id/button_create_user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="OBSERVABLE" />
+        android:text="Register" />
 
     <Button
         android:id="@+id/button_flowable"

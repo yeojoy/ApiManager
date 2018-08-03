@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context="me.yeojoy.apimanager.LoginActivity">
+
+    <EditText
+        android:id="@+id/edit_text_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="@string/hint_login_username" />
+
+    <EditText
+        android:id="@+id/edit_text_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="@string/hint_login_password"
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/button_request_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Log in" />
+
+    <TextView
+        android:id="@+id/text_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

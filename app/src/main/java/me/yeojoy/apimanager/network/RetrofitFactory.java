@@ -26,7 +26,7 @@ public class RetrofitFactory implements Constants {
         }
 
         return new Retrofit.Builder()
-                .baseUrl(PRODUCT_HOST)
+                .baseUrl(BuildConfig.DEBUG ? DEV_HOST : PRODUCT_HOST)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(httpClient.build())
